@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice-<%=receipt%></title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="invoice-main">
+        <div class="invoice">
+            <div class="container">
+                <br>
+                <div class="row noMarg invoice-header">
+                    <div class="col-md-8">
+                        <h5 class="textBold">KESTREL EXPRESS</h5>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="textBold">INVOICE INFORMATION</h6>
+                        <div class="row noMarg spaceItems mTop15">
+                            <h6>Invoice Number:</h6>
+                            <h6><%=pal_id%></h6>
+                        </div>
+                        <div class="row noMarg spaceItems">
+                            <h6>Date:</h6>
+                            <h6><%=date%></h6>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br>
+                <div class="row noMarg">
+                    <div class="col-md-8 noMarg">
+                        <div class="row noMarg">
+                            <div class="col-md-6">
+                                <h6 class="textBold primaryText">PAYEE INFORMATION</h6>
+                                <div class="row noMarg spaceItems">
+                                    <h6>Email:</h6>
+                                    <h6><%=payee_email%></h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="textBold primaryText">PAYER INFORMATION</h6>
+                                <div class="row noMarg spaceItems">
+                                    <h6>Email:</h6>
+                                    <h6><%=payer_email%></h6>
+                                </div>
+                                <div class="row noMarg spaceItems">
+                                    <h6>Fullname:</h6>
+                                    <h6><%=payer_fullname%></h6>
+                                </div>
+                                <div class="row noMarg spaceItems">
+                                    <h6>Order number:</h6>
+                                    <h6><a href="/view/order/for?id=<%=receipt_id%>"><%=receipt%></a></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <div class="cargo-infor">
+                            <h6 class="primaryText">SHIPPEMENT INFORMATION</h6>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Receipt</th>
+                                      <th scope="col">Paypal ID</th>
+                                      <th scope="col">Description</th>
+                                      <th scope="col">Amount</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="table-row ">
+                                        <th scope="row" class="row_id"><h6><a href="/view/order/for?id=<%=receipt_id%>"><%=receipt%></a></h6></th>
+                                        <td><%=pal_id%></td>
+                                        <td><%= description %></td>
+                                        <td><%= amount %></td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                                
+                            </div>
+                            <br>
+                            <div class="w100 invoice-price">
+                                <h6 class="textSmall">TOTAL AMOUNT</h6>
+                                <div class="row">
+                                    <h5 class="primaryText textBold bi bi-currency-dollar"></h5>
+                                    <h5 class="primaryText textBold"><%=amount%></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/vendors/jquery/jquery.js"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/handleOrderProfile.js"></script>
+</body>
+</html>

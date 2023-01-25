@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incomplete Orders</title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/bulma-calendar.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body onload="handlePagination(<%=pagination.current %>,<%=pagination.prev %>, <%=pagination.next %>)">
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list"></i></button>
+
+<!-- ======= Header ======= -->
+<header id="header">
+  <div class="d-flex flex-column">
+
+    <div class="profile mTop15">
+    <h1 class="tertiaryText "><a href="/home/">KESTREL EXPRESS</a></h1>
+    </div>
+
+    <nav class="nav-menu">
+      <ul>
+        <li ><a href="/home/"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="/users?page=1&&sort=new"><i class="bx bx-user"></i> <span>Users</span></a></li>
+        <li><a href="/KO?page=1"><i class="bx bx-file-blank"></i> <span>Complete Orders</span></a></li>
+        <li class="active"><a href="/inKO/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Incomplete Orders</a></li>
+        <li><a href="/payments?page=1"><i class="bx bx-server"></i> Payments</a></li>
+        <li><a href="/quotations/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Quotations</a></li>
+
+        <li><a href="/profile/"><i class="bx bx-user"></i> profile</a></li>
+
+      </ul>
+    </nav><!-- .nav-menu -->
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+  </div>
+</header><!-- End Header -->
+<div id ='main'>
+  <div class="overlay centerItems hidden" id="status-modal">
+    <div class="ke-alert bx-shadow  tertiaryColor">
+      <h6 class="mBot15  textCenter"  id="status-header">Confirm action</h6>
+      <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+      <div class="del-btns row spaceItems mTop15">
+        <button class="btn primaryColor ke-btn" id = 'status-change' onclick="changeStatus()">Change</button>
+        <button class="btn btn-outline-primary" id = 'status-cancel' onclick="closeModal()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay centerItems hidden" id="order-delete-modal">
+    <div class="ke-alert bx-shadow tertiaryColor">
+      <h6 class="mBot15 textCenter">Confirm Deletion</h6>
+      <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+      <div class="del-btns row spaceItems mTop15">
+        <button class="btn primaryColor ke-btn" id = 'order-delete'>Delete</button>
+        <button class="btn btn-outline-primary" id = 'order-cancel'>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay centerItems hidden" id="calendar-modal">
+    <div class="col-md-7 calendar-form bx-shadow">
+      <div class="date-time">
+        <input type="date" data-display-mode="default" data-is-range="true" data-close-on-select="false">
+      </div>
+      <div class="location-infor row">
+        <div class="col-md-6 mTop15">
+          <label for="from" class="form-label">From</label>
+          <input type="text" id="from" class= 'required' placeholder="From " name="from">
+        </div>
+        <div class="col-md-6 mTop15">
+          <label for="to" class="form-label">Destination</label>
+          <input type="text" id="to" placeholder="Destination" name="to">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn primaryColor ke-btn mTop15 mLeft15 centerItems" id = 'calendar-save' onclick="postDepartation()">
+          Save
+        </button>
+        <button class="btn primaryColor ke-btn mTop15 mLeft15" id = 'calendar-cancel' onclick="closeCalendar()">
+          Cancel
+        </button>
+      </div> 
+    
+    </div>
+  </div>
+  <div class="container">
+    <br>
+    <div class="mTop15 mBot15">
+      <h3 class="primaryText textBold">Incomplete Orders</h3>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4 mBot15 positionUnset resp">
+        <div class="dropdown positionUnset">
+          <button id= 'statusMenuBtn' class="btn primaryColor positionUnset dropdown-toggle tertiaryText" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Change Status
+          </button>
+          <ul id="statusMenu" class="DBMenu hidden">
+            <li class = 'li_' title="CRW">Cargo Received at warehouse</li>
+            <li class = 'li_' title="GDA">Goods Delivered to airline</li>
+            <li class = 'li_' title="DPT">Departed</li>
+            <li class = 'li_' title="ACC">Arrived in Connecting Country</li>
+            <li class = 'li_' title="DPTC">Departed Connecting Country</li>
+            <li class = 'li_' title="AAD">Arrived Destination</li>
+            <li class = 'li_' title="KO">Delivery</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 resp mBot15 centerItems positionUnset  search-box">
+        <input type="text" name = 'search' class="positionUnset" oninput="handleSearch('inko','/view/order/for')" id="search-bar" placeholder = 'Search by Receipt'>
+        <div class=" col-md-3 search-results hidden">
+          <div class="close-icon">
+            <h5 class="bi bi-x" onclick="closeSearchBox()"></h5>
+          </div>
+          <div class="s_results">
+            
+          </div>
+          <div class="nun hidden">
+            <h6 class="primaryText textCenter">Nothing Found</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 resp mBot15 jse positionUnset">
+        <button id="FMenuBtn" class="btn primaryColor positionUnset dropdown-toggle tertiaryText" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Filter <i class="bi bi-filter-right"></i>
+        </button>
+        <ul id="FMenu" class="DBMenu moved-extra hidden">
+          <li>Receipt</li>
+          <li>Order Id</li>
+          <li>User</li>
+          <li>Status</li>
+          <li>Date</li>
+        </ul>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Receipt Number</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Transportation</th>
+            <th scope="col">Caro type</th>
+            <th scope="col">Belongs To</th>
+            <th scope="col">View</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (orders.length !=  0) {%>
+            <% orders.map((order)=>{ %>
+              <tr class="table-row ">
+                <td class="hidden" id= 'number'><%= order.number %></td>
+                <td class="hidden" id = 'users'><%= order.belongs_to %></td>
+                <th scope="row" class="row_id"><%= order.id %></th>
+                <td><%= order.receiptNumber %></td>
+                <td><%= order.jobDate %></td>
+                <td><%= order.status %></td>
+                <td><%= order.Tmode %></td>
+                <td><%= order.cargoType %></td>
+                <td ><%= order.userName %></td>
+                <td>
+                  <a href="/view/order/for?id=<%=order.id%>" target="_blank" class="btn black ke-btn">
+                  View
+                  </a>
+              </td>
+                <td><button onclick="handleOrderDeletion(<%=order.id%>)" class="btn primaryColor ke-btn">
+                  Delete
+                </button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+                <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+          <% } %>
+        </tbody>
+      </table>
+      <div class="row w100 spaceItems noMarg">
+            <div>
+              <i class="icon-nav bi bi-chevron-left" id="nav-prev"></i>
+              <p class="textCenter" style="margin-top:7.5px ;"><%=pagination.prev %></p>
+            </div>
+       
+          <div>
+            <i class="icon-nav bi bi-chevron-right"  id="nav-next"></i>
+            <br>
+            <p class="textCenter" style="margin-top:7.5px ;" ><%=pagination.next %></p>
+          </div>
+        
+       
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/vendors/jquery/jquery.js"></script>
+<script src="/vendors/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/js/bulma-calendar.js"></script>
+<script src="/js/pagination.js"></script>
+<script src="/js/handleChangeState.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
+
+

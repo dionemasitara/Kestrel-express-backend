@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body onload="handlePagination(<%=pagination.current %>,<%=pagination.prev %>, <%=pagination.next %>)">
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list"></i></button>
+
+<!-- ======= Header ======= -->
+<header id="header">
+  <div class="d-flex flex-column">
+
+    <div class="profile mTop15">
+    <h1 class="tertiaryText "><a href="/home/">KESTREL EXPRESS</a></h1>
+    </div>
+
+    <nav class="nav-menu">
+      <ul>
+        <li ><a href="/home/"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li class="active"><a href="/users?page=1&&sort=new"><i class="bx bx-user"></i> <span>Users</span></a></li>
+        <li><a href="/KO?page=1"><i class="bx bx-file-blank"></i> <span>Complete Orders</span></a></li>
+        <li><a href="/inKO/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Incomplete Orders</a></li>
+        <li><a href="/payments?page=1"><i class="bx bx-server"></i> Payments</a></li>
+        <li><a href="/quotations/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Quotations</a></li>
+        <li><a href="/profile/"><i class="bx bx-user"></i> profile</a></li>
+
+      </ul>
+    </nav><!-- .nav-menu -->
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+</header><!-- End Header -->
+<div id ='main'>
+  <div class="overlay centerItems hidden" id="delete-modal">
+    <div class="ke-alert bx-shadow tertiaryColor">
+      <h6 class="mBot15 textCenter">Confirm Deletion</h6>
+      <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+      <div class="del-btns row spaceItems mTop15">
+        <button class="btn primaryColor ke-btn" id = 'user-delete'>Delete</button>
+        <button class="btn btn-outline-primary" id = 'user-cancel'>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay centerItems hidden" id ='add-user-model'>
+    <div class="ke-form bx-shadow tertiaryColor">
+      <form class="row g-3"  action="/add/user/admin" method="post">
+        <div class="col-12">
+          <label for="fullname">Fullname</label>
+          <input type="text" id="fullname" class="w100 required" name="fullname" placeholder="Fullname">
+        </div>
+        <div class="col-md-6 mTop15">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class= 'required' placeholder="Email " name="email">
+        </div>
+        <div class="col-md-6 mTop15">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="text" id="phone" class= 'required' placeholder="Phone Number" name="number">
+        </div>
+        <div class="col-12 mTop15">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" id="address" class="w100" placeholder="1234 Main St" name="address">
+        </div>
+        <div class="col-md-12 mTop15 mBot15">
+          <h5>Date of Birth</h5>
+        </div>
+        <div class="col-md-4">
+          <label for="date">Date</label>
+          <input type="text" placeholder="Date" name="date">
+        </div>
+          <div class="col-md-4">
+          <label for="date">Month</label>
+          <input type="text" placeholder="Month" name="month">
+        </div>
+          <div class="col-md-4">
+          <label for="date">Year</label>
+          <input type="text" placeholder="Year" name="year">
+        </div>
+        <div class="col-12 mTop15">
+          <label for="occ" class="form-label">Occupation</label>
+          <input type="text" id="occ" class="w100" placeholder="Occupation" name="occupation">
+        </div>
+        <div class="col-md-12 row centerItems mTop15" >
+          <button type="submit" class="btn primaryColor ke-btn mRight15" onclick="handleAddition">Add User</button>
+          <button type="button" class="btn btn-outline-danger mLeft15" id="'closeModal" onclick="closeAddUserModal()">Cancel</button>
+        
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section" id="users">
+
+      <div class="mTop15 mBot15">
+        <h3 class="primaryText textBold">Users</h3>
+      </div>
+
+      <div class="row" >
+        <div class="col-md-4 row spaceItems positionUnset resp">
+          <button class="btn primaryColor ke-btn positionUnset" onclick="handleAddition()">Add User</button>
+        </div>
+        <div class="col-md-4  positionUnset  search-box resp">
+          <div class="mLeft15">
+            <input type="text" name = 'search' placeholder = 'Search by name' oninput="handleSearch('users', '/get/infor/for')" id= 'search-bar'>
+            <div class=" col-md-3 search-results users-box hidden">
+              <div class="close-icon">
+                <h5 class="bi bi-x" onclick="closeSearchBox()"></h5>
+              </div>
+              <div class="s_results">
+                
+              </div>
+              <div class="nun hidden">
+                <h6 class="primaryText textCenter">Nothing Found</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mBot15 jse positionUnset resp">
+          <button id="FMenuBtn" class="btn primaryColor positionUnset dropdown-toggle tertiaryText" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Filter <i class="bi bi-filter-right"></i>
+          </button>
+          <ul id="FMenu" class="DBMenu moved-extra hidden">
+            <li>New Users</li>
+            <li>Old Users</li>
+          </ul>
+        </div>
+      </div>
+      <br>
+      <div class="section-main row mTop15">
+        <% results.forEach((user)=>{ %>
+          <div class="card col-md-3 mRight15 mBot15" style="width: 18rem;">
+            <div class="card-body">
+              <div class="initial centerItems">
+                <h5 class="init textCenter">
+                  <%= user.initial %>
+                </h5>
+              </div>
+              <h5 class="card-title noMarg textCenter"><%= user.fullname %></h5>
+              <p class="card-subtitle mb-2 text-muted noMarg textCenter"><%= user.number%> </p>
+              <p><%= user.address %></p>  
+              <div class="row centerItems">
+                <a class="btn black ke-btn positionUnset col-md-10 tertiaryText" href="/get/infor/for?id=<%= user.user_id %>" target="_blank">View Profile</a>
+                <button class="btn primaryColor positionUnset col-md-10 ke-btn mTop15" onclick="handleDeletion(<%= user.user_id %>)">Delete</button>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+        
+      </div>
+      <div class="row w100 spaceItems noMarg">
+
+        <% if (pagination.prev != 1 ) {%>
+          <div>
+            <i class="icon-nav bi bi-chevron-left" id="nav-prev"></i>
+            <p class="textCenter"><%=pagination.prev %></p>
+          </div>
+        <% } %>
+        <% if (pagination.next != 0 ) {%>
+          <div>
+            <i class="icon-nav bi bi-chevron-right"  id="nav-next"></i>
+            <p class="textCenter"><%=pagination.next %></p>
+          </div>
+        <% } %>
+       
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/vendors/jquery/jquery.js"></script>
+<script src="/vendors/bootstrap/js/bootstrap.js"></script>
+<script src="/js/userPagination.js"></script>
+<script src = '/js/handleUsers.js'></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
+
+

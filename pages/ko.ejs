@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Orders</title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body onload="handlePagination(<%=pagination.current %>,<%=pagination.prev %>, <%=pagination.next %>)">
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list"></i></button>
+
+<!-- ======= Header ======= -->
+<header id="header">
+  <div class="d-flex flex-column">
+
+    <div class="profile mTop15">
+    <h1 class="tertiaryText "><a href="/home/">KESTREL EXPRESS</a></h1>
+    </div>
+
+    <nav class="nav-menu">
+      <ul>
+        <li ><a href="/home/"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="/users?page=1&&sort=new"><i class="bx bx-user"></i> <span>Users</span></a></li>
+        <li  class="active"><a href="/KO?page=1"><i class="bx bx-file-blank"></i> <span>Complete Orders</span></a></li>
+        <li><a href="/inKO/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Incomplete Orders</a></li>
+        <li><a href="/payments?page=1"><i class="bx bx-server"></i> Payments</a></li>
+        <li><a href="/quotations/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Quotations</a></li>
+        <li><a href="/profile/"><i class="bx bx-user"></i> profile</a></li>
+
+      </ul>
+    </nav><!-- .nav-menu -->
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+  </div>
+</header><!-- End Header -->
+<div id ='main'>
+  <div class="container">
+    <div class="section" id="users">
+      <h3 class="section-header primaryText textBold">Complete Orders</h3>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Receipt Number</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Transportation</th>
+            <th scope="col">Caro type</th>
+            <th scope="col">Belongs To</th>
+            <th scope="col">View</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (orders.length !=  0) {%>
+            <% orders.map((order)=>{ %>
+              <tr class="table-row ">
+                <th scope="row" class="row_id"><%= order.id %></th>
+                <td><%= order.receiptNumber %></td>
+                <td><%= order.jobDate %></td>
+                <td><%= order.status %></td>
+                <td><%= order.Tmode %></td>
+                <td><%= order.cargoType %></td>
+                <td><%= order.belongs_to %></td>
+                <td>
+                  <a href="/view/order/for?id=<%=order.id%>" target="_blank" class="btn black ke-btn">
+                  View
+                  </a>
+              </td>
+                <td><button onclick="handleOrderDeletion(<%=order.id%>)" class="btn primaryColor ke-btn">
+                  Delete
+                </button>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+                <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+          <% } %>
+        </tbody>
+      </table>
+      <div class="row w100 spaceItems noMarg">
+        <div>
+          <i class="icon-nav bi bi-chevron-left" id="nav-prev"></i>
+          <p class="textCenter" style="margin-top:7.5px ;"><%=pagination.prev %></p>
+        </div>
+   
+      <div>
+        <i class="icon-nav bi bi-chevron-right"  id="nav-next"></i>
+        <br>
+        <p class="textCenter" style="margin-top:7.5px ;" ><%=pagination.next %></p>
+      </div>
+    
+       
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/vendors/jquery/jquery.js"></script>
+<script src="/vendors/bootstrap/js/bootstrap.js"></script>
+<script src="/js/koPagination.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
+
+

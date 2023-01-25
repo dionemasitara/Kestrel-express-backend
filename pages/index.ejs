@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list"></i></button>
+
+<!-- ======= Header ======= -->
+<header id="header">
+  <div class="d-flex flex-column">
+
+    <div class="profile mTop15">
+    <h1 class="tertiaryText "><a href="/home/">KESTREL EXPRESS</a></h1>
+    </div>
+
+    <nav class="nav-menu">
+      <ul>
+        <li class="active"><a href="/home/"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="/users?page=1&&sort=new"><i class="bx bx-user"></i> <span>Users</span></a></li>
+        <li><a href="/KO?page=1"><i class="bx bx-file-blank"></i> <span>Complete Orders</span></a></li>
+        <li><a href="/inKO/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Incomplete Orders</a></li>
+        <li><a href="/payments?page=1"><i class="bx bx-server"></i> Payments</a></li>
+        <li><a href="/quotations/page?number=1&&filter=date"><i class="bx bx-book-content"></i>Quotations</a></li>
+        <li><a href="/profile/"><i class="bx bx-user"></i> profile</a></li>
+
+      </ul>
+    </nav>
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+  </div>
+</header>
+<div id ='main'>
+  <div class="container">
+    <div id="home-section">
+      <div class="row">
+        <% reports.forEach((report)=>{ %>
+          <div class="col-md-3 report-card row primaryColor">
+            <div class="icon centerItems">
+              <i class="<%= report.icon %>"></i>
+            </div>
+            <div class="col-md-4 amount mLeft15">
+              <h5 class="tertiaryText textCenter textBold">
+                <%= report.heading %>
+              </h5>
+              <h6 class="tertiaryText textCenter">
+               <%= report.amount %>
+              </h6>
+            </div>
+          </div>
+        <% }) %>
+       
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/vendors/jquery/jquery.js"></script>
+<script src="/vendors/bootstrap/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
+
+

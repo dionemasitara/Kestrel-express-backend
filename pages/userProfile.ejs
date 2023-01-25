@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= general.userInformation.name %></title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="user-main">
+        <div class="user-profile centerItems">
+            <div class="initial centerItems">
+                <h5 class="init textCenter">
+                <%= init %> 
+                </h5>
+            </div>
+            <h5 class="card-title noMarg textCenter"><%= general.userInformation.name %></h5>
+            <p class="card-subtitle mb-2 text-muted noMarg textCenter"><%= general.email %></p>
+            <p class="card-subtitle mb-2 text-muted noMarg textCenter"><%= general.userInformation.phone %></p>
+
+            <p><%= general.userInformation.address %></p>  
+       </div>
+        <div class="container">
+           <div class="mTop15 col-md-5">
+                <div class="transaction row spaceItems">
+                    <h6 class="primaryText textBold mLeft15">Complete Orders</h6>
+                    <p class="primaryText"><%= general.transactions.KO %></p>
+                </div>
+                <div class="transaction row spaceItems">
+                    <h6 class="primaryText textBold mLeft15">Incomplete Orders</h6>
+                    <p class="primaryText"><%= general.transactions.inKO %></p>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="primaryText textBold mLeft15 textCenter">Orders</h5>
+                    <hr>
+                    <div>
+                        <% if (orders.length !=  0) {%>
+                            <% orders.map((order)=>{ %>
+                                <div class="row-card  row spaceItems">
+                                    <div class="icon centerItems">
+                                        <i class="bx <%= order.icon %>"></i>
+                                    </div>
+                                    <div>
+                                        <a href="/view/order/for?id=<%= order.id %>" class="secondaryText"><h6 class="textBold noMarg "><%= order.receipt %> </h6></a>
+                                        <h6 class="secondaryText noMarg small-text"><%= order.date %> </h6>
+                                        <p class="secondaryText noMarg  small-text">STATUS : <%= order.status %> </p>
+                                    </div>
+                                   
+                                    <div class="carret centerItems">
+                                        <i class="bx bxs-chevron-right-circle"></i>
+                                    </div>
+                                    
+                                </div>
+                            <% }) %>
+
+                        <% } else { %>
+                             <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+                        <% } %>
+                    </div>
+                    
+
+                </div>
+                <div class="col-md-6">
+                    <h5 class="primaryText textBold mLeft15 textCenter">Payments</h5>
+                    <hr>
+                    <% if (payments.length !=  0) {%>
+                        <% payments.map((payment)=>{ %>
+                            <div class="row-card row">
+                                <div class="row-card  row spaceItems">
+                                    <i class="bx bx-dollar"></i>
+                                </div>
+                                <div>
+                                    <a href="/view/payment/for?id=<%=payment.payment_id%>" class="secondaryText"><h6 class="textBold noMarg "><%=payment.receipt%></h6></a>
+                                    <h6 class="secondaryText noMarg small-text"><%= payment.date %> </h6>
+                                    <p class="secondaryText noMarg  small-text">AMOUNT : <%= payment.amount %> </p>
+                                </div>
+                               
+                                <div class="carret centerItems">
+                                    <i class="bx bxs-chevron-right-circle"></i>
+                                </div>
+                                
+                            </div>
+                        <% }) %>
+
+                    <% } else { %>
+                         <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+                    <% } %>
+
+               
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/vendors/jquery/jquery.js"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

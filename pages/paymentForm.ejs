@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paymemts</title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="main_payments">
+        <div class="container">
+            <div class="centerItems"style="height: 100%;">
+                <div class="col-md-5 payment" >
+                    <div class="price_header primaryColor ">
+                        <br>
+                        <h5 class="tertiaryText textCenter " >Total to pay</h5>
+                        <div class="row noMarg centerItems">
+                            <h5 class="bi bi-currency-dollar textCenter tertiaryText"> </h5>
+                            <h5 class="tertiaryText textCenter" id="price"> <%= price %></h5>
+                            <h5 class="tertiaryText textCenter hidden" id="ID"> <%= id %></h5>
+                            <h5 class="tertiaryText textCenter hidden" id="belongs_to"> <%= belongs_to %></h5>
+
+
+                        </div>
+                        <br>
+                    </div>  
+                    <div class="payment-body">
+                        <h5>Payment Form</h5>
+                        <br><br>
+                        <div class="payment-information">
+                            <div class="row spaceItems noMarg">
+                                <div class="">
+                                    <h6>Cargo Number :</h6>
+                                </div>
+                                <div class="">
+                                    <h6 class="primaryText" id="receipt"><%= receipt %></h6>
+                                </div>
+                            </div>
+                            <div class="row spaceItems noMarg mTop15">
+                                <div class="">
+                                    <h6>Payment status: </h6>
+                                </div>
+                                <div class="">
+                                    <h6 class="primaryText" ><%= status %></h6>
+                                </div>
+                            </div>
+                            <br><br>
+                            <button class="w100 row centerItems paypal-btn noMarg" id="pay">
+                                <i class="bx bxl-paypal"> </i> <h6>Pay with PayPal</h6>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/vendors/jquery/jquery.js"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+    <script>
+        let RECEIPT = document.querySelector('#receipt').innerHTML
+        let PRICE = document.querySelector('#price').innerHTML
+        let ID = document.querySelector('#ID').innerHTML.replace(' ','')
+        let belongs_to = document.querySelector('#belongs_to').innerHTML.replace(' ','')
+        
+        
+        document.querySelector('#pay')
+        .addEventListener('click', ()=>{
+            $(location).attr("href","/paypal/payments?price="+PRICE +"&receipt=" + RECEIPT + '&id='+ID+'&bt='+belongs_to)                    
+        })
+
+    </script>
+</body>
+</html>

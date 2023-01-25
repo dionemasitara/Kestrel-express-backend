@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=results.RNumber%></title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="order-main row">
+        <div class="col-md-7 tertiaryColor">
+            <div class="row bordered_btm">
+                <div class="big-icon mTop15">
+                    <i class="bi bi-chat-square-quote-fill textCenter"></i>
+                </div>
+                <div class="col-md-6 mTop15">
+                    <div class="order-infor">
+                        <h4 class="primaryText textBold textCenter" id="receiptN"><%=results.RNumber%></h4>
+                        <h6 class="secondaryText textCenter"><%= results.date %></h6>
+                        <h6 class="secondaryText textCenter"><%= results.name %></h6>
+                        <i class="hidden" id="number"><%= results.number %></i>
+                        <h6 class="secondaryText textCenter">From : <%= results.from %></h6>
+                        <h6 class="secondaryText textCenter">To : <%= results.to %></h6>
+                        <h6 class="secondaryText textCenter">Status  : <%= results.status %></h6>
+                    </div>
+                </div>
+                <div class="col-md-6 mTop15  ct">
+                    <h4 class="primaryText textBold">Description</h4>
+                    <p><%=results.message%></p>
+                </div>
+            </div>
+            <div class="cart">
+                <h5 class="primaryText textBold mLeft15 mTop15">Cart</h5>
+
+                <div class="row container-pd ">
+                    <% if (cart.length !=  0) {%>
+                        <% cart.map((item)=>{ %>
+                            <div class="col-lg-3 card bx-shadow mRight_card" style="border: unset !important; padding: unset !important;">
+                                <div class="image">
+                                  <img src="<%= item.image %>" alt="" srcset="" class="img-fluid">
+                                </div>
+                                <div class="item-infor">
+                                  <h6 class="tertiaryText textBold"><%= item.name %> </h6>
+                                  <div class="row spaceItems " style="padding-left: 15px; padding-right : 15px;">
+                                    <p class="tertiaryText textBold">Quantity</p>
+                                    <p class="tertiaryText"> <%= item.quantity %> </p>
+                                  </div>
+                                  
+                                  <p class="tertiaryText"><%= item.desc %> </p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                            <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col">
+            <div class="delivery-time tertiaryColor">
+                <div class="container-pd">
+                    <h4 class="primaryText">Reply Quotation</h4>
+                    <div id="update-success" class="alert hidden alert-success positionUnset alert-dismissible fade show" role="alert">
+                        Update Successfull!!
+                      </div>
+                      <div id="update-fail" class="alert hidden alert-danger positionUnset alert-dismissible fade show" role="alert">
+                        An error occured try again later
+                      </div>
+                    <input type="hidden" id ='zag' value="<%=results.CID%>">    
+                    <label for="price">Price</label>
+                    <input type="text" name="price" id="price" value="<%=results.price%>" class="w100">
+                    <br>
+                    <textarea class="mTop15" name="response" id="response" placeholder="Response" cols="36" rows="5" style="padding:7.5px"></textarea>
+                    <button class="btn w100 ke-btn primaryColor" id="response-btn">
+                        Send
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="w100">
+               
+                <div class="upload tertiaryColor container-pd">
+                    <h5 class="primaryText">Upload Invoice</h5>
+                    <br>
+                    <form method="post" enctype="multipart/form-data" id="upload-invoice">
+                        <div id="upload-success" class="alert  alert-success hidden positionUnset alert-dismissible fade show" role="alert">
+                            Upload Successfull!!
+                          </div>
+                          <div id="upload-fail" class="alert  alert-danger hidden positionUnset alert-dismissible fade show" role="alert">
+                            Fresh page and try again.
+                          </div>
+                        <input type="hidden" name="orderId" value="<%=results.CID%>">
+                        <input type="file" name="invoice" id="invoice">
+                        <br>
+                        <h5 class="hidden" id="uploadingTEXT">Uploading...</h5>
+                        <button class="btn primaryColor ke-btn mTop15" id="upload-btn">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+     
+            </div>
+        </div>
+       
+       
+    </div>
+    <script src="/vendors/jquery/jquery.js"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/handleQuotations.js"></script>
+    <script src="/js/fireemoji.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/uploadQuote.js"></script>
+</body>
+</html>

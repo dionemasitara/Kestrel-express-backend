@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=results.RNumber%></title>
+    <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendors/boxicons/css/boxicons.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="order-main row">
+        <div class="col-md-7 tertiaryColor">
+            <div class="row bordered_btm">
+                <div class="big-icon mTop15">
+                    <i class="bx bxs-plane textCenter"></i>
+                </div>
+                <div class="col-md-6 mTop15">
+                    <div class="order-infor">
+                        <h4 class="primaryText textBold textCenter" id= 'receipt'><%= results.RNumber %></h4>
+                        <h6 class="secondaryText textCenter"><%= results.date %></h6>
+                        <h6 class="secondaryText textCenter"><%= results.name %></h6>
+                        <h6 class="secondaryText textCenter"><%= results.CType %></h6>
+                        <h6 class="secondaryText textCenter"><%= results.TMode %></h6>
+                        <h6 class="secondaryText textCenter"><%= results.status %></h6>
+                        <i class="hidden" id="number"><%= results.number %></i>
+                    </div>
+                </div>
+                <div class="col-md-6 mTop15  ct">
+                    <h4 class="primaryText textBold">Delivery Information</h4>
+                    <h6 class="secondaryText">Name : <%= results.DName %></h6>
+                    <h6 class="secondaryText">Email : <%= results.DMail %></h6>
+                    <h6 class="secondaryText">Phone : <%= results.DNum %></h6>
+                    <h6 class="secondaryText">National Number : <%= results.DId %> </h6>
+    
+                </div>
+            </div>
+            <div class="cart">
+                <h5 class="primaryText textBold mLeft15 mTop15">Cart</h5>
+
+                <div class="row container-pd ">
+                    <% if (cart.length !=  0) {%>
+                        <% cart.map((item)=>{ %>
+                            <div class="col-lg-3 card bx-shadow mRight_card" style="border: unset !important; padding: unset !important;">
+                                <div class="image">
+                                  <img src="<%= item.image %>" alt="" srcset="" class="img-fluid">
+                                </div>
+                                <div class="item-infor">
+                                  <h6 class="tertiaryText textBold"><%= item.name %> </h6>
+                                  <div class="row spaceItems " style="padding-left: 15px; padding-right : 15px;">
+                                    <h6 class="tertiaryText textBold">Quantity</h6>
+                                    <h6 class="tertiaryText"> <%= item.quantity %> </h6>
+                                  </div>
+                                  
+                                  <p class="tertiaryText"><%= item.desc %> </p>
+                                  <div class="row spaceItems" style="padding-left: 15px; padding-right : 15px;">
+                                    <h6 class="tertiaryText textBold">Date</h6>
+                                    <h6 class="tertiaryText"> <%= item.jcdate %> </h6>
+                                  </div>
+                                  <div class="row spaceItems" style="padding-left: 15px; padding-right : 15px;">
+                                    <h6 class="tertiaryText textBold">Time</h6>
+                                    <h6 class="tertiaryText"> <%= item.jctime %> </h6>
+                                  </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                            <h6 class="secondaryText textCenter mTop15">No data yet</h6> 
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col">
+
+            <div class="cal ">
+                <div class="calculator container-pd">
+                    <div id="update-success" class="alert hidden alert-success positionUnset alert-dismissible fade show" role="alert">
+                        Update Successfull!!
+                      </div>
+                      <div id="update-fail" class="alert hidden alert-danger positionUnset alert-dismissible fade show" role="alert">
+                        An error occured try again later
+                      </div>
+                    <h5 class="primaryText">Calculate Price</h5>
+                    <div class="discount">
+                        <div class="row noMarg spaceItems">
+                            <label for="discount-slider" class="form-label">Discount</label>
+                            <h5 class="primaryText" id ='discount'>10</h5>
+                        </div>
+                        <input type="range" class="form-range" value="0" class="noMarg" min="0" max="100" id="discount-slider" class = 'discount-slider'>
+                    </div>
+                    <div class="weight">
+                        <h6 class="secondaryText">CARGO WEIGHT</h6>
+                        <input type="text" name="cargoWeight" id="cargo-weight" class="w100">
+                        <h6 class="secondaryText mTop15">PRICE</h6>
+                        <h4 class="primaryText textBold"  id="weight"><%= results.price %></h4>
+
+                    </div>
+                    <button class="btn ke-btn primaryColor w100" id="price-save" onclick="savePrice(<%= results.CID %>)">
+                        Save
+                    </button>
+                </div>
+            </div>
+            
+            <div class="delivery-time tertiaryColor">
+                <div class="container-pd">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="noMarg secondaryText"><%= results.SDate %></p>
+                            <h5 class="textBold"><%= results.STime %></h5>
+                            <small class="primaryText">ESTIMATED</small>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="noMarg secondaryText">From</p>
+                            <h5 class="textBold"><%= results.from %></h5>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="noMarg secondaryText"><%= results.EDate %></p>
+                            <h5 class="textBold"><%= results.ETime %></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="noMarg secondaryText">Destination</p>
+                            <h5 class="textBold"><%= results.to %></h5>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <br>
+        <div class="w100">
+           
+            <div class="upload tertiaryColor container-pd">
+                <h5 class="primaryText">Upload Invoice</h5>
+                <br>
+                <form method="post" enctype="multipart/form-data" id="upload-invoice">
+                    <div id="upload-success" class="alert  alert-success hidden positionUnset alert-dismissible fade show" role="alert">
+                        Upload Successfull!!
+                      </div>
+                      <div id="upload-fail" class="alert  alert-danger hidden positionUnset alert-dismissible fade show" role="alert">
+                        Fresh page and try again.
+                      </div>
+                    <input type="hidden" name="orderId" value="<%=results.CID%>">
+                    <input type="file" name="invoice" id="invoice">
+                    <br>
+                    <h5 class="hidden" id="uploadingTEXT">Uploading...</h5>
+                    <button class="btn primaryColor ke-btn mTop15" id="upload-btn">
+                        Upload
+                    </button>
+                </form>
+            </div>
+ 
+        </div>
+       
+    </div>
+    <script src="/vendors/jquery/jquery.js"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/handleOrderProfile.js"></script>
+    <script src="/js/fireemoji.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/uploadInvoice.js"></script>
+
+</body>
+</html>
