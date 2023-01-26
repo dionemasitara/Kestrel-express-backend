@@ -155,21 +155,19 @@
         
       </div>
       <div class="row w100 spaceItems noMarg">
-
-        <% if (pagination.prev != 1 ) {%>
-          <div>
-            <i class="icon-nav bi bi-chevron-left" id="nav-prev"></i>
-            <p class="textCenter"><%=pagination.prev %></p>
-          </div>
-        <% } %>
-        <% if (pagination.next != 0 ) {%>
-          <div>
-            <i class="icon-nav bi bi-chevron-right"  id="nav-next"></i>
-            <p class="textCenter"><%=pagination.next %></p>
-          </div>
-        <% } %>
-       
+        <div>
+          <i class="icon-nav bi bi-chevron-left" id="nav-prev"></i>
+          <p class="textCenter" style="margin-top:7.5px ;"><%=pagination.prev %></p>
+        </div>
+   
+      <div>
+        <i class="icon-nav bi bi-chevron-right"  id="nav-next"></i>
+        <br>
+        <p class="textCenter" style="margin-top:7.5px ;" ><%=pagination.next %></p>
       </div>
+    
+   
+    </div>
     </div>
   </div>
 </div>

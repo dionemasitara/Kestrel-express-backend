@@ -143,8 +143,8 @@ app.get('/users/', (req, res)=>{
                pagination : {
                 current : PAGE_NUMBER,
                 prev : PAGE_NUMBER - 1 == 0  ? 1 : PAGE_NUMBER - 1,
-                next :  results.results.length >= 10 ? PAGE_NUMBER + 1 : 0
-            }
+                next :  results.results.length >= 6 ? PAGE_NUMBER + 1 : 0
+                }
             })
         }
         else{
@@ -1371,7 +1371,7 @@ app.post('/user/login/', urlenCoded,(req, res)=>{
                     .then(async(zag)=>{
                         let passwordMatch =  await bcyrpt.compare(req.body.values.password, zag.password_)
                         if(passwordMatch){
-                            if (req.body.values.password === 'hB4dSTx0Vu2' && req.body.values.email === 'info@kestrelexpress.com')
+                            if (req.body.values.password === 'hB4dSTx0Vu2' && req.body.values.email === 'infoadmin@kestrelexpress.com')
                             {
                                 results.admin = true
                             }
@@ -1647,12 +1647,13 @@ app.post('/edit/user/information',
 app.post('/edit/user/password',urlenCoded, (req, res)=>{
     pool.getConnection((error, con)=>{
         if(!error){
-            let query = `SELECT * from passwords WHERE belongs_to = ${req.query.id} AND user_password = '${req.body.values.password}'`
+            //req.body.values.password
+            let query = `SELECT * from passwords WHERE belongs_to = ${req.query.id}`
             con.query(query, async(err, rows)=>{
                 
                 if(!err){
                     if(rows.length != 0){
-                        await Helpers.updateUserPassword(req.query.id, req.body.values, con)
+                        await Helpers.updateUserPassword(req.query.id, req.body.values, con, bcyrpt)
                         .then((response)=>{
                             if(response){
                                 res.status(200).json({

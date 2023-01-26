@@ -456,11 +456,12 @@ let updateUserinformation = (user_id, values, con) =>{
     })
    
 }
-let updateUserPassword  = (user_id, values, con)=>{
+let updateUserPassword  = (user_id, values, con, bcrypt)=>{
     return new Promise((resolve, reject)=>{
+        let newPassword = bcrypt.hash(values.newPassword, 10)
         let query = `
             UPDATE passwords
-            SET user_password ='${values.newPassword}'
+            SET user_password ='${newPassword}'
             WHERE belongs_to = ${user_id}
         `
         con.query(query, (err, rows)=>{
