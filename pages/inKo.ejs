@@ -40,30 +40,8 @@
   </div>
 </header><!-- End Header -->
 <div id ='main'>
-  <div class="overlay centerItems hidden" id="status-modal">
-    <div class="ke-alert bx-shadow  tertiaryColor">
-      <h6 class="mBot15  textCenter"  id="status-header">Confirm action</h6>
-      <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
-      <div class="del-btns row spaceItems mTop15">
-        <button class="btn primaryColor ke-btn" id = 'status-change' onclick="changeStatus()">Change</button>
-        <button class="btn btn-outline-primary" id = 'status-cancel' onclick="closeModal()">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="overlay centerItems hidden" id="order-delete-modal">
-    <div class="ke-alert bx-shadow tertiaryColor">
-      <h6 class="mBot15 textCenter">Confirm Deletion</h6>
-      <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
-      <div class="del-btns row spaceItems mTop15">
-        <button class="btn primaryColor ke-btn" id = 'order-delete'>Delete</button>
-        <button class="btn btn-outline-primary" id = 'order-cancel'>
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
+ 
+ 
   <div class="overlay centerItems hidden" id="calendar-modal">
     <div class="col-md-7 calendar-form bx-shadow">
       <div class="date-time">
@@ -92,6 +70,30 @@
   </div>
   <div class="container">
     <br>
+    <div class="overlay centerItems hidden" id="order-delete-modal">
+      <div class="ke-alert bx-shadow tertiaryColor">
+        <h6 class="mBot15 textCenter">Confirm Deletion</h6>
+        <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+        <div class="del-btns row spaceItems mTop15">
+          <button class="btn primaryColor ke-btn" id = 'order-delete'>Delete</button>
+          <button class="btn btn-outline-primary" id = 'order-cancel'>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="overlay centerItems hidden" id="status-modal">
+      <div class="ke-alert bx-shadow  tertiaryColor">
+        <h6 class="mBot15  textCenter"  id="status-header">Confirm action</h6>
+        <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+        <div class="del-btns row spaceItems mTop15">
+          <button class="btn primaryColor ke-btn" id = 'status-change' onclick="changeStatus()">Change</button>
+          <button class="btn btn-outline-primary" id = 'status-cancel' onclick="closeModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="mTop15 mBot15">
       <h3 class="primaryText textBold">Incomplete Orders</h3>
     </div>

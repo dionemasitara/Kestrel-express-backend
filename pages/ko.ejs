@@ -39,6 +39,18 @@
 </header><!-- End Header -->
 <div id ='main'>
   <div class="container">
+    <div class="overlay centerItems hidden" id="order-delete-modal">
+      <div class="ke-alert bx-shadow tertiaryColor">
+        <h6 class="mBot15 textCenter">Confirm Deletion</h6>
+        <h6 class='primaryText textBold hidden' id = 'deletionErr'>Error Occured try again</h6>
+        <div class="del-btns row spaceItems mTop15">
+          <button class="btn primaryColor ke-btn" id = 'order-delete'>Delete</button>
+          <button class="btn btn-outline-primary" id = 'order-cancel'>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="section" id="users">
       <h3 class="section-header primaryText textBold">Complete Orders</h3>
     </div>

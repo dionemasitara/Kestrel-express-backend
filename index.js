@@ -3,21 +3,30 @@ const body_parser = require("body-parser")
 const path = require("path")
 const mysql = require("mysql")
 var paypal = require('paypal-rest-sdk');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-let  { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 let { getApps, initializeApp } = require("firebase/app");
 let firebaseConfig = require("./Helpers/FIREBASE")
-
+const {Storage} = require('@google-cloud/storage');
+let fs = require('fs')
 
 const {check, validationResult, body } =  require("express-validator")
-let multer = require('multer')
 let cors = require('cors')
 let app =  express()
 let Helpers = require('./Helpers/Helpers')
 let NoodeMailer = require('./Helpers/NodeMailer')
-let bcyrpt = require('bcrypt')
+let bcyrpt = require('bcrypt');
+const Multer = require("multer");
 
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    fileSize: 5 * 1024 * 1024
+  });
+const gcs = new Storage({
+    projectId: 'kestrel-ios-storage',
+    keyFilename: './Helpers/keyfile.json'
+});
 
+const bucketName = 'keiospics'
+const bucket = gcs.bucket(bucketName);
 
 
 app.use(express.static('static')); 
@@ -39,14 +48,11 @@ app.use(cors({
 })) 
 
 paypal.configure({
-    'mode': 'live', //sandbox or live
+    'mode': 'live',
     'client_id': 'AdBWL9FTBGLwDGawrW1IaTdNakkANhONnzzI33Cfu-UWfD_EWuis3i29xWwjPf-5bJMW2rTomX-nxzs8',
     'client_secret': 'EKrDLHrGw5GHIfxRYAhWHrxgGS7Dy555jkiZKsfpEhFPROYAYE8rKzT36lUT11Kmpzq574bX1q2YPEX5'
 });
-if (!getApps().length) {
-    initializeApp(firebaseConfig);
-}
-  
+let ImgUpload = {};
 
 //Set html view engine
 app.set("views", path.join(__dirname, "pages"));
@@ -60,16 +66,16 @@ let pool = mysql.createPool({
     password:"GOn,]8M%9UFk",
     database:"kestrel_express_admin",
     multipleStatements  : true
-})    
-/*  let pool = mysql.createPool({
+})   
+/* let pool = mysql.createPool({
     host:"localhost",
     port:"3306",
     user:"root",
     password:"programmerslivelonger",
     database:"kestrel_express",
     multipleStatements  : true
-}) */
-
+}) 
+ */
 let checkEmail =  (email)=> {
     return new Promise((resolve, reject) => {
         try{
@@ -101,16 +107,47 @@ let checkEmail =  (email)=> {
     }) 
 }
 
+function getPublicUrl(filename) {
+    return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
+}
+ImgUpload.uploadToGcs = (req, res, next) => {
+    req.files.map((file)=>{
+        if(!file) return next();
+
+        try{
+            const gcsname = file.originalname;
+            const file_ = bucket.file(gcsname);
+          
+            const stream = file_.createWriteStream({
+              metadata: {
+                contentType: file.mimetype
+              }
+            });
+          
+            stream.on('error', (err) => {
+              file.cloudStorageError = err;
+              next(err);
+            });
+          
+            stream.on('finish', () => {
+              file.cloudStorageObject = gcsname;
+              file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+              next();
+            });
+          
+            stream.end(file.buffer); 
+        }
+        catch{
+            console.log('Network Error!')
+        }
+       
+    })
+}
+
 PORT_  = process.env.PORT || 1927
 
 app.listen(PORT_, () => console.info("http://localhost:" + PORT_))
 
-const invoice_upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-      fileSize: 5 * 1024 * 1024 // no larger than 5mb, you can change as needed.
-    }
-  });
 
 app.get('/', (req, res)=>{
     res.render('login')
@@ -1178,7 +1215,7 @@ app.get('/455f5rwwf/wsuwbHnGDObu/NISNhojpj', (req, res)=>{
     })
 })
 app.post('/admin/login',urlenCoded, (req, res)=>{
-    pool.getConnection((error,con)=>{
+    pool.getConnection(async(error,con)=>{
         if(!error){
             let query = `
             SELECT * FROM 
@@ -1650,7 +1687,6 @@ app.post('/edit/user/password',urlenCoded, (req, res)=>{
             //req.body.values.password
             let query = `SELECT * from passwords WHERE belongs_to = ${req.query.id}`
             con.query(query, async(err, rows)=>{
-                
                 if(!err){
                     if(rows.length != 0){
                         await Helpers.updateUserPassword(req.query.id, req.body.values, con, bcyrpt)
@@ -1904,9 +1940,10 @@ app.post('/reset/password', urlenCoded, (req, res)=>{
 })
 app.post('/change/password/', urlenCoded, (req, res)=>{
     let user_zag = parseInt(req.body.id)
-    pool.getConnection((error, con)=>{
+    pool.getConnection(async(error, con)=>{
+        let newPass =  await bcyrpt.hash(req.body.password, 10)
         if(!error){
-            let query = `UPDATE passwords SET user_password = '${req.body.password}' WHERE belongs_to = ${user_zag};`
+            let query = `UPDATE passwords SET user_password = '${newPass}' WHERE belongs_to = ${user_zag};`
             con.query(query, (err, rows)=>{
                 if(!err){
                     res.status(200).json({
@@ -1977,4 +2014,20 @@ app.delete('/delete/order', urlenCoded, (req, res)=>{
         })
      }
   })
+})
+app.post('/post/ios/images',multer.array('images'), ImgUpload.uploadToGcs, function(request, response, next) {
+    let allSent = false
+    request.files.map(file=>{
+       file.cloudStoragePublicUrl != undefined ? allSent = true  : allSent = false
+    })
+    if (allSent){
+        response.status(200).json({
+            status : true
+        })
+    }
+    else{
+        response.status(200).json({
+            status : false
+        })
+    }
 })

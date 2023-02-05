@@ -456,9 +456,10 @@ let updateUserinformation = (user_id, values, con) =>{
     })
    
 }
-let updateUserPassword  = (user_id, values, con, bcrypt)=>{
-    return new Promise((resolve, reject)=>{
-        let newPassword = bcrypt.hash(values.newPassword, 10)
+let updateUserPassword  = async(user_id, values, con, bcrypt)=>{
+    return new Promise(async(resolve, reject)=>{
+        let newPassword = await bcrypt.hash(values.newPassword, 10)
+        console.log(newPassword)
         let query = `
             UPDATE passwords
             SET user_password ='${newPassword}'

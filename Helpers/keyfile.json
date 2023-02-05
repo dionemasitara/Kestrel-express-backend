@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "kestrel-ios-storage",
+  "private_key_id": "b0035cd12edef32459e826a13cb1a82780841b3f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCPwfG/AFQ3q7h6\npoRqZ2Q8J1ZitxsuCz28Go8tQqjBF4VSOoAYVvdwRHccP0+0J6gltobdH3Z5L8m1\nNB07wLleUZ9gjUmYa6PeIp4knBDbcdzrZUVcsxVrnr4dIUG3V7CgKr7wx5PNa+1A\nUG9c7mnfr+FxDPRhkKQiP3dstWI3rfUeYWQj07J9/h44Y1LubCm/FJEbyXIPa9tm\nuuLf1pxAoXn3ch62Zi6QUzglK4V+FFYjZlGTQUSE31ZUXQWoMgbXCHTgkrM2IDSC\n8rTBL3t+CSN68CnFFo1l7t25PMRMcBKNCkKSyScHUsmmFtNEwzGP6EdSLFYNkp/x\n/H8JHQEfAgMBAAECggEAAf2aBt6Oy/yNP+mJYN3QpgKXcCN/9VnDf5TQkbxgENhu\nCK71siCWKZBRI+t+g4yfB/KomGxEnDX8sY0osHihOHyh29jpAXrQGJXbIb+lfhxs\nBjhvRvLV45kdodKhkdPdhsJAxZ3F3qzVarQSbrOAdM//K60VvzodA7pkQXWbiBDT\nyLhcrNgaceZOTKUcy6ZpO7s0zWRP/dOYcMTR7hVxUOnLrlwS6X9celvBp3kFG1H4\nypGRUwr8ZfhxZ6Y8fvjH+OdRc9ZuJp64hAxv4dEZhaXGYsgW9KOrzuSwKT1I47IY\nmMqAQgwbGouqsFEhZzHg32bAbgkmDTjzRLCvRgyhcQKBgQDGbRT189HlW7xMjUnO\nPll5bxrmMxvDEW1uS7k6q+wKWOj5kVQKQPXLKXAUTBhUbM1dAgeMhOngNfFwSpNK\nS2n0LPLJLjHLkIF8vCrwSufjWBQNRpkfpYZ9iOsBX1zSuooUIv+vAlUKuDYQK7IS\nCxhenVYR1+auf7hlZHe8dKohjwKBgQC5eCIlWWVwmzRdCVgE00bElT8NnS+e36Tt\nWvfeZFTOdHQ1UXPmmTAT7jnhWakaHzf9oedVUNPz6AKGzjn201Lg9rtw+jRWWsKl\ngWYKoborePM+YwiM8z0ADERNxe6Tf0jI/URAMSTw0uop5aPhtx6au2MBfcawDaPt\npIXB8x4/cQKBgBQBy6tA+lj19vaBCIATKVJlMYEkhhgVGcOVPwf7bcFdVaBUVvTx\nt9bURsjFI27fyZUnLzur6ykAR2fbHR7Qm85S+efvEHZGC8hX8Lxp0RfLObpc8/OM\n7RKbS5bH1sQoquN84+rxgUGjcVAQF9RZ6gsgMh16d3gAyMbwamJGISFhAoGAUvPo\nUcwqErNYOER1mbLldAdMrEohgm2E1qRZOJ6nT6/GShKkQ/9AAaoLOT9g4s4TvN0t\nGnuMUQr0Flcmlb7u0q+IJn/B6N2vMVcuzJKJMehm4wBoUqJ4Jg1Wf3KHwnCrnTmp\nzQwt+YhcM2ECa3H7vjkRjxkyRIvVRfTP3m9emAECgYA3rVkE6+hiZ3g88GTVsMEn\nsDuoUuHDARWJGieYQjeb6iAV0xfvtsf496+abE5NfIoarwCL0fhFutAkiM3u7enS\njiQlaS8Z2/nWElWf+01vVp1a2uB+zR00AbC9Dx07aKfYtLy6ptu83Qpwo0l5pxdD\nbFsoPkofvFJ3ynPC2JHoPQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "keiospics@kestrel-ios-storage.iam.gserviceaccount.com",
+  "client_id": "105716801306521432480",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/keiospics%40kestrel-ios-storage.iam.gserviceaccount.com"
+}
