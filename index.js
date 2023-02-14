@@ -3,10 +3,9 @@ const body_parser = require("body-parser")
 const path = require("path")
 const mysql = require("mysql")
 var paypal = require('paypal-rest-sdk');
-let { getApps, initializeApp } = require("firebase/app");
-let firebaseConfig = require("./Helpers/FIREBASE")
 const {Storage} = require('@google-cloud/storage');
-let fs = require('fs')
+
+require('dotenv').config()
 
 const {check, validationResult, body } =  require("express-validator")
 let cors = require('cors')
@@ -22,7 +21,7 @@ const multer = Multer({
   });
 const gcs = new Storage({
     projectId: 'kestrel-ios-storage',
-    keyFilename: './Helpers/keyfile.json'
+    keyFilename : process.env.KEYFILE
 });
 
 const bucketName = 'keiospics'
@@ -49,8 +48,8 @@ app.use(cors({
 
 paypal.configure({
     'mode': 'live',
-    'client_id': 'AdBWL9FTBGLwDGawrW1IaTdNakkANhONnzzI33Cfu-UWfD_EWuis3i29xWwjPf-5bJMW2rTomX-nxzs8',
-    'client_secret': 'EKrDLHrGw5GHIfxRYAhWHrxgGS7Dy555jkiZKsfpEhFPROYAYE8rKzT36lUT11Kmpzq574bX1q2YPEX5'
+    'client_id': process.env.PAYPAL_CID,
+    'client_secret': process.env.PAYPAL_SECRET
 });
 let ImgUpload = {};
 
@@ -2016,6 +2015,7 @@ app.delete('/delete/order', urlenCoded, (req, res)=>{
   })
 })
 app.post('/post/ios/images',multer.array('images'), ImgUpload.uploadToGcs, function(request, response, next) {
+    console.log('fufuf')
     let allSent = false
     request.files.map(file=>{
        file.cloudStoragePublicUrl != undefined ? allSent = true  : allSent = false

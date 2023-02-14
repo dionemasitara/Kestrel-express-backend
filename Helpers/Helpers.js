@@ -2,6 +2,8 @@ const axios = require("axios");
 let Status = require('./Statuses')
 var StringCrypto = require('string-crypto');
 const password = 'bRI7A9$8jHv78ZkTNg@A#*oS4x';
+require('dotenv').config()
+
 
 const {
     encryptString,
@@ -642,8 +644,8 @@ function sendSMS(status, numbers){
             url: 'https://d7sms.p.rapidapi.com/messages/v1/send',
             headers: {
             'content-type': 'application/json',
-            Token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiYWM4OThlYzItNDE2Yy00YTA5LThjYmUtOTg2N2M3YzUzY2IxIn0.RfWajf3THvADiaR7s4SWdgSLigGujxaJsSuWfGEsSP0',
-            'X-RapidAPI-Key': '4ce68f179cmsh38bf9a8c9a46db4p1616fbjsn3009da327a74',
+            Token: process.env.SMSTOKEN,
+            'X-RapidAPI-Key': process.env.X_RAPI_Key,
             'X-RapidAPI-Host': 'd7sms.p.rapidapi.com'
             },
             data: JSON.stringify({
@@ -672,8 +674,8 @@ function alertQuotation( numbers, message){
             url: 'https://d7sms.p.rapidapi.com/messages/v1/send',
             headers: {
             'content-type': 'application/json',
-            Token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiYWM4OThlYzItNDE2Yy00YTA5LThjYmUtOTg2N2M3YzUzY2IxIn0.RfWajf3THvADiaR7s4SWdgSLigGujxaJsSuWfGEsSP0',
-            'X-RapidAPI-Key': '4ce68f179cmsh38bf9a8c9a46db4p1616fbjsn3009da327a74',
+            Token: process.env.SMSTOKEN,
+            'X-RapidAPI-Key': process.env.X_RAPI_Key,
             'X-RapidAPI-Host': 'd7sms.p.rapidapi.com'
             },
             data: JSON.stringify({
