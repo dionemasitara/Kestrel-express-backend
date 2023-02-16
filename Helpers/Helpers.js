@@ -669,6 +669,8 @@ function sendSMS(status, numbers){
 }
 function alertQuotation( numbers, message){
     return new Promise((resolve, reject)=>{
+        console.log(process.env.SMSTOKEN)
+        console.log(process.env.X_RAPI_Key)
         const options = {
             method: 'POST',
             url: 'https://d7sms.p.rapidapi.com/messages/v1/send',
