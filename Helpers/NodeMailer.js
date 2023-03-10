@@ -17,7 +17,7 @@ async function sendMail(mail, code) {
   
   let info = await transporter.sendMail({
     from: '"" <development@kestrelexpress.com>', 
-    to:"gilbert2klopah@gmail.com", 
+    to: `${mail}`, 
     subject: "Complete Verification Process",
     text: "Complete Verification Process. Enter Code .: KE" + code, 
     html: `
