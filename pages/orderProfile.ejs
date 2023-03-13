@@ -130,30 +130,76 @@
             </div>
         </div>
         <br>
-        <div class="w100">
-           
-            <div class="upload tertiaryColor container-pd">
-                <h5 class="primaryText">Upload Invoice</h5>
-                <br>
-                <form method="post" enctype="multipart/form-data" id="upload-invoice">
-                    <div id="upload-success" class="alert  alert-success hidden positionUnset alert-dismissible fade show" role="alert">
-                        Upload Successfull!!
-                      </div>
-                      <div id="upload-fail" class="alert  alert-danger hidden positionUnset alert-dismissible fade show" role="alert">
-                        Fresh page and try again.
-                      </div>
-                    <input type="hidden" name="orderId" value="<%=results.CID%>">
-                    <input type="file" name="invoice" id="invoice">
+        <%if (results.invoiceUploaded) { %>
+            <div class="w100">
+                <div class="upload tertiaryColor container-pd">
+                    <h5 class="primaryText">Upload Invoice</h5>
                     <br>
-                    <h5 class="hidden" id="uploadingTEXT">Uploading...</h5>
-                    <button class="btn primaryColor ke-btn mTop15" id="upload-btn">
-                        Upload
-                    </button>
-                </form>
+                    <form method="post" enctype="multipart/form-data" id="upload-invoice">
+                        <div id="upload-success" class="alert  alert-success hidden positionUnset alert-dismissible fade show" role="alert">
+                            Upload Successfull!!
+                        </div>
+                        <div id="upload-fail" class="alert  alert-danger hidden positionUnset alert-dismissible fade show" role="alert">
+                            Fresh page and try again.
+                        </div>
+                        <input type="hidden" name="orderId" value="<%=results.CID%>">
+                        <input type="file" name="invoice" id="invoice">
+                        <br>
+                        <h5 class="hidden" id="uploadingTEXT">Uploading...</h5>
+                        <button class="btn primaryColor ke-btn mTop15" id="upload-btn">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+    
             </div>
- 
-        </div>
-       
+        <% }else{ %>
+            <div class="w100">
+                <div class="upload tertiaryColor container-pd">
+                    <h5 class="primaryText">Download Invoice</h5>
+                   <a href="<%= results.invoice %>">Click here</a>
+                </div>
+            </div>
+        <% } %>
+        <br>
+        <%if (results.proofUploaded) { %>
+            <div class="w100">
+                <div class="upload tertiaryColor container-pd">
+                    <h5 class="primaryText">Upload Parcel Pictures</h5>
+                    <br>
+                    <form method="post" enctype="multipart/form-data" id="parcel-image-invoice">
+                        <div id="upload-success" class="alert  alert-success hidden positionUnset alert-dismissible fade show" role="alert">
+                            Upload Successfull!!
+                          </div>
+                          <div id="upload-fail" class="alert  alert-danger hidden positionUnset alert-dismissible fade show" role="alert">
+                            Fresh page and try again.
+                          </div>
+                        <input type="hidden" name="orderId" value="<%=results.CID%>">
+                        <input type="file" name="invoice" id="invoice">
+                        <br>
+                        <textarea rows="5" cols="38" placeholder="Description" name="description" style="padding:5px"></textarea>
+                        <br>
+                        <h5 class="hidden" id="uploadingTEXT">Uploading...</h5>
+                        <button class="btn primaryColor ke-btn mTop15" id="upload-btn">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+     
+            </div>
+        <% }else{ %>
+            <div class="w100">
+                <div class="upload tertiaryColor container-pd">
+                    <h5 class="primaryText">Parcel Verificaton Picture</h5>
+                    <img src="<%= results.imageProof%>" alt="Image Proof"class="img-thumbnail" class="img-fluid">
+                    <p>
+                        <%= results.desc %>
+                    </p>
+                </div>
+            </div>
+        <% } %>
+
+      
     </div>
     <script src="/vendors/jquery/jquery.js"></script>
     <script src="/vendors/bootstrap/js/bootstrap.js"></script>
