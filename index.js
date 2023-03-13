@@ -606,6 +606,12 @@ app.get('/view/order/for',(req, res)=>{
                         results.from = row.from_ === '' ? ('PENDING') : row.from_
                         results.to = row.to_ === '' ? ('PENDING') : row.to_
                         results.price = row.price_ === null ? ('0') : row.price_
+                        results.invoiceUploaded = row.invoice != null > 0 ? (false) : (true)
+                        results.proofUploaded = row.parcelProof != null > 0  ? (false) : (true)
+                        results.desc = row.parelDesc
+                        results.imageProof = row.parcelProof
+                        results.invoice = row.invoice
+
                     })
                     con.query(`
                     SELECT fullname from users WHERE user_id = ${rows[0].belongs_to};
@@ -721,6 +727,8 @@ app.get('/get/order/for', (req, res)=>{
                         results.weight = row.weight_
                         results.status = row.status_
                         results.invoice = row.invoice
+                        results.desc = row.parelDesc
+                        results.imageLocation = row.parcelProof
                         results.SDate = row.startDate === '' ? ('PENDING') : row.startDate
                         results.EDate = row.endDate=== '' ? ('PENDING') : row.endDate
                         results.STime = row.startTime === '' ? ('PENDING') : row.startTime
@@ -1575,6 +1583,45 @@ app.post('/insert/link/',urlenCoded, (req, res)=>{
                         statusMode: true
                     })
                     let reply = `Hello from Kestrel Express.\n An invoice has been uploaded to your recent order ( ${req.body.receipt} ).
+                    `
+                    Helpers.alertQuotation([req.body.number], reply)
+                }
+                else{
+                    console.log(err)
+                    res.status(500).json({
+                        statusMode: false
+                    })
+                }
+            })
+        con.release()
+
+        }
+        else{
+            res.status(500).json({
+                statusMode: false
+            })
+            console.log('Error .>' +error)
+        }
+
+    })
+})
+app.post('/insert/parcel/image/link/',urlenCoded, (req, res)=>{
+    pool.getConnection((error, con)=>{
+        if(!error){
+            let query = `
+            UPDATE productjobs 
+            SET
+            parcelProof = '${req.body.link}',
+            parelDesc = '${req.body.description}'
+            WHERE productJobsID = ${req.body.id};
+            `
+            con.query(query, (err, rows)=>{
+                if(!err){
+
+                    res.status(200).json({
+                        statusMode: true
+                    })
+                    let reply = `Hello from Kestrel Express.\n A Parcel Proof Image that indicates that the parcel has arrived in our workshop has been uploaded to your recent order ( ${req.body.receipt} ).
                     `
                     Helpers.alertQuotation([req.body.number], reply)
                 }
