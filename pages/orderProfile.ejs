@@ -130,7 +130,7 @@
             </div>
         </div>
         <br>
-        <%if (results.invoiceUploaded) { %>
+        <%if (!results.invoiceUploaded) { %>
             <div class="w100">
                 <div class="upload tertiaryColor container-pd">
                     <h5 class="primaryText">Upload Invoice</h5>
@@ -162,7 +162,7 @@
             </div>
         <% } %>
         <br>
-        <%if (results.proofUploaded) { %>
+        <%if (!results.proofUploaded) { %>
             <div class="w100">
                 <div class="upload tertiaryColor container-pd">
                     <h5 class="primaryText">Upload Parcel Pictures</h5>
