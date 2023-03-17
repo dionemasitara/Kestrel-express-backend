@@ -606,8 +606,8 @@ app.get('/view/order/for',(req, res)=>{
                         results.from = row.from_ === '' ? ('PENDING') : row.from_
                         results.to = row.to_ === '' ? ('PENDING') : row.to_
                         results.price = row.price_ === null ? ('0') : row.price_
-                        results.invoiceUploaded = row.invoice != null > 0 ? (false) : (true)
-                        results.proofUploaded = row.parcelProof != null > 0  ? (false) : (true)
+                        results.invoiceUploaded = row.invoice === null ? (false) : (true)
+                        results.proofUploaded = row.parcelProof === null ? (false) : (true)
                         results.desc = row.parelDesc
                         results.imageProof = row.parcelProof
                         results.invoice = row.invoice
